@@ -1,0 +1,39 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#calculator{
+    display: flex;
+    flex-direction: column;
+    height: 620px;
+    width: 620px;
+    background-color: gray;
+    align-items: center;
+}
+
+#screen{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    height: 150px;
+    width: 600px;
+    background-color: cornsilk;
+}
+
+#buttons{
+    display: flex;
+}
+#operations, #numbers, #bottom{
+    display: flex;
+    flex-wrap: wrap-reverse;
+}
+.number{
+    display: flex;
+    height: 50px;
+    width: 200px;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+}
