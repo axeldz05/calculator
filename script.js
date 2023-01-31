@@ -1,6 +1,6 @@
 const numberButtons = document.querySelectorAll('.number');
 const currentNumber = document.querySelector('#currentValue');
-const totalValue = document.querySelector('#totalValue');
+const previousOperations = document.querySelector('#previousOperations');
 
 let intTotalValue = 0;
 let totalValuePreview = false;
@@ -24,58 +24,59 @@ function divide(a,b) {
 }
 //#endregion
 function operate(operator) {
-    if(totalValue.textContent === ''){
+    if(previousOperations.textContent === ''){
         intTotalValue = +currentNumber.textContent;
-        updateNumbers(operator);
+        updateScreen(operator);
         return;
     }
-    switch (operator) {
+    if(totalValuePreview){
+        previousOperations.textContent = previousOperations.textContent.slice(0,previousOperations.textContent.length - 3) + ` ${operator} `;
+        return;
+    }
+    let previousOperation = previousOperations.textContent[previousOperations.textContent.length - 2];
+    switch (previousOperation) {
         case '+':
             intTotalValue = add(intTotalValue,+currentNumber.textContent);
-            updateNumbers(operator);
+            updateScreen(operator);
             break;
         case '-':
             intTotalValue = subtract(intTotalValue,+currentNumber.textContent);
-            updateNumbers(operator);
+            updateScreen(operator);
             break;
         case '/':
             intTotalValue = divide(intTotalValue,+currentNumber.textContent);
-            updateNumbers(operator);
+            updateScreen(operator);
             break;
         case '*':
             intTotalValue = multiply(intTotalValue,+currentNumber.textContent);
-            updateNumbers(operator);
+            updateScreen(operator);
             break;
         case '=':
-            if(totalValue.textContent === '') return;
             isFinalNumber = true;
-            operate(totalValue.textContent[totalValue.textContent.length - 2]);
+            operate(previousOperation);
             break;
         default:
             break;
     }
 }
 
-function updateNumbers(operation){
+function updateScreen(operator){
     if(isFinalNumber){
-        totalValue.textContent = totalValue.textContent + currentNumber.textContent + ' =';
+        previousOperations.textContent = previousOperations.textContent + currentNumber.textContent + ' =';
         currentNumber.textContent = intTotalValue.toString();
         totalValuePreview = true;
         return;
     }
-
-    if(totalValue.textContent === ''){
-        totalValue.textContent = currentNumber.textContent + ` ${operation} `;
-    } else{
-    totalValue.textContent = totalValue.textContent + currentNumber.textContent + ` ${operation} `;
-    }
+    
+    previousOperations.textContent = previousOperations.textContent + currentNumber.textContent + ` ${operator} `;
     currentNumber.textContent = intTotalValue.toString();
     totalValuePreview = true;
 }
+
 function insertNumber(e){
     if(currentNumber.textContent === '0' && e.target.textContent === '0') return;
     if(isFinalNumber) {
-        totalValue.textContent = ''
+        previousOperations.textContent = ''
         intTotalValue = 0;
         isFinalNumber = false;
     }
