@@ -1,6 +1,7 @@
 const numberButtons = document.querySelectorAll('.number');
 const currentNumber = document.querySelector('#currentValue');
 const previousOperations = document.querySelector('#previousOperations');
+const undoButton = document.querySelector('#undo');
 
 let intTotalValue = 0;
 let totalValuePreview = false;
@@ -9,6 +10,7 @@ numberButtons.forEach((number) => number.addEventListener('click', insertNumber)
 document.querySelector('#sign').addEventListener('click', changeSign);
 document.querySelector('#decimal').addEventListener('click', addDecimal);
 document.querySelectorAll('.operation').forEach((operation) => operation.addEventListener('click', (e) => operate(e.target.textContent)))
+undoButton.addEventListener('click', undoLastInputNumber);
 //#region Basic Functions
 function add(a,b) {
     return a + b;
@@ -104,4 +106,8 @@ function changeSign() {
 function addDecimal() {
     if(currentNumber.textContent.includes('.')) return;
     currentNumber.textContent += '.';
+}
+function undoLastInputNumber(){
+    if(totalValuePreview || isFinalNumber) return;
+    currentNumber.textContent = currentNumber.textContent.slice(0,currentNumber.textContent.length - 1);
 }
