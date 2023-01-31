@@ -20,7 +20,11 @@ function multiply(a,b) {
     return a*b;
 }
 function divide(a,b) {
-    return b === 0 ? 'undefined' : a/b;
+    if(b === 0){
+        isFinalNumber = true;
+        return 'undefined';
+    }
+    return a/b;
 }
 //#endregion
 function operate(operator) {
