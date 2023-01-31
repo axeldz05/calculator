@@ -69,7 +69,11 @@ function updateScreen(operation){
         currentNumber.textContent = intTotalValue.toString();
         return;
     }
+    if(operation === '*' || operation === '/'){
+        previousOperations.textContent = '(' + previousOperations.textContent + currentNumber.textContent + ')' + ` ${operation} `;
+    }else{
     previousOperations.textContent = previousOperations.textContent + currentNumber.textContent + ` ${operation} `;
+    }
     currentNumber.textContent = intTotalValue.toString();
 }
 
