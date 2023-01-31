@@ -33,44 +33,44 @@ function operate(operator) {
         previousOperations.textContent = previousOperations.textContent.slice(0,previousOperations.textContent.length - 3) + ` ${operator} `;
         return;
     }
-    let previousOperation = previousOperations.textContent[previousOperations.textContent.length - 2];
-    switch (previousOperation) {
+    calculateLastOperation();
+    updateScreen(operator);
+}
+
+function calculateLastOperation() {
+    let lastOperator = previousOperations.textContent[previousOperations.textContent.length - 2];
+    switch (lastOperator) {
         case '+':
-            intTotalValue = add(intTotalValue,+currentNumber.textContent);
-            updateScreen(operator);
+            intTotalValue = add(intTotalValue, +currentNumber.textContent);
             break;
         case '-':
-            intTotalValue = subtract(intTotalValue,+currentNumber.textContent);
-            updateScreen(operator);
+            intTotalValue = subtract(intTotalValue, +currentNumber.textContent);
             break;
         case '/':
-            intTotalValue = divide(intTotalValue,+currentNumber.textContent);
-            updateScreen(operator);
+            intTotalValue = divide(intTotalValue, +currentNumber.textContent);
             break;
         case '*':
-            intTotalValue = multiply(intTotalValue,+currentNumber.textContent);
-            updateScreen(operator);
+            intTotalValue = multiply(intTotalValue, +currentNumber.textContent);
             break;
         case '=':
             isFinalNumber = true;
-            operate(previousOperation);
+            calculateLastOperation(lastOperator);
             break;
         default:
+            console.log('operator not defined');
             break;
     }
 }
 
-function updateScreen(operator){
+function updateScreen(operation){
+    totalValuePreview = true;
     if(isFinalNumber){
         previousOperations.textContent = previousOperations.textContent + currentNumber.textContent + ' =';
         currentNumber.textContent = intTotalValue.toString();
-        totalValuePreview = true;
         return;
     }
-    
-    previousOperations.textContent = previousOperations.textContent + currentNumber.textContent + ` ${operator} `;
+    previousOperations.textContent = previousOperations.textContent + currentNumber.textContent + ` ${operation} `;
     currentNumber.textContent = intTotalValue.toString();
-    totalValuePreview = true;
 }
 
 function insertNumber(e){
