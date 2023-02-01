@@ -39,6 +39,9 @@ function operate(operator) {
         previousOperations.textContent = previousOperations.textContent.slice(0,previousOperations.textContent.length - 3) + ` ${operator} `;
         return;
     }
+    if(operator === '='){
+        isFinalNumber = true;
+    }
     calculateLastOperation();
     updateScreen(operator);
 }
@@ -57,10 +60,6 @@ function calculateLastOperation() {
             break;
         case '*':
             intTotalValue = multiply(intTotalValue, +currentNumber.textContent);
-            break;
-        case '=':
-            isFinalNumber = true;
-            calculateLastOperation(lastOperator);
             break;
         default:
             console.log('operator not defined');
